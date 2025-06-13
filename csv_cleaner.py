@@ -4,7 +4,7 @@ import pandas as pd
 # Caminho da pasta onde estão os CSVs
 pasta_produtos = "C:/Users/Samsung/Desktop/Jobs/Base - Analise/Base_Produtos"
 pasta_pedidos = "C:/Users/Samsung/Desktop/Jobs/Base - Analise/Base_Pedidos"
-pasta_salvar = "C:/Users/Samsung/Desktop/Jobs/Base - Analise"
+pasta_salvar = "C:/Users/Samsung/Desktop/Jobs/Base - Analise/Base_Python"
 
 # Padrões de agrupamento (nome das lojas)
 padroes = [
