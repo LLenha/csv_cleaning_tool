@@ -1,4 +1,4 @@
-# CMV Agrupador de Lojas
+# Limpeza e união de arquivos CSV
 
 Este projeto automatiza o processamento de arquivos CSV de produtos e pedidos de diferentes lojas. Ele realiza as seguintes tarefas:
 
