@@ -66,10 +66,16 @@ for arquivo in arquivos_csv_pedidos:
             grupos_pedidos[padrao].append(df)
             break
 
-# Salva cada grupo de pedidos em um CSV final
+# Salva cada grupo de pedidos em um CSV 
 for padrao, lista_dfs in grupos_pedidos.items():
     if lista_dfs:
         df_final = pd.concat(lista_dfs, ignore_index=True)
         nome_saida = f"pedidos_{padrao.replace('pedidos_', '').replace('_', '')}_geral.csv"
         df_final.to_csv(os.path.join(pasta_salvar, nome_saida), index=False)
 
+# Salva um CSV com todos os pedidos e um para todos os produtos na mesma pasta (pasta_salvar) (csvs finais)
+df_produtos_geral = pd.concat([df for lista in grupos_produtos.values() for df in lista], ignore_index=True)
+df_produtos_geral.to_csv(os.path.join(pasta_salvar, "produtos_geral.csv"), index=False)
+
+df_pedidos_geral = pd.concat([df for lista in grupos_pedidos.values() for df in lista], ignore_index=True)
+df_pedidos_geral.to_csv(os.path.join(pasta_salvar, "pedidos_geral.csv"), index=False)
