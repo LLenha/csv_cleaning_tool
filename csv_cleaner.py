@@ -1,4 +1,5 @@
 import os
+import glob
 import pandas as pd
 
 # Caminho da pasta onde estão os CSVs
@@ -13,14 +14,14 @@ padroes = [
 
 # --- PRODUTOS ---
 
-# Lista arquivos .csv
-arquivos_csv_produtos = [f for f in os.listdir(pasta_produtos) if f.endswith('.csv')]
+# Lista arquivos .csv recursivamente (incluindo subpastas)
+arquivos_csv_produtos = glob.glob(os.path.join(pasta_produtos, '**/*.csv'), recursive=True)
 
 # Dicionário para agrupar DataFrames de produtos
 grupos_produtos = {f'produtos_{p}_': [] for p in padroes}
 
-for arquivo in arquivos_csv_produtos:
-    caminho_completo = os.path.join(pasta_produtos, arquivo)
+for caminho_completo in arquivos_csv_produtos:
+    arquivo = os.path.basename(caminho_completo)
     df = pd.read_csv(caminho_completo)
     for padrao in grupos_produtos.keys():
         if arquivo.startswith(padrao):
@@ -39,12 +40,13 @@ for padrao, lista_dfs in grupos_produtos.items():
 
 # --- PEDIDOS ---
 
-arquivos_csv_pedidos = [f for f in os.listdir(pasta_pedidos) if f.endswith('.csv')]
+# Lista arquivos .csv recursivamente (incluindo subpastas)
+arquivos_csv_pedidos = glob.glob(os.path.join(pasta_pedidos, '**/*.csv'), recursive=True)
 
 grupos_pedidos = {f'pedidos_{p}_': [] for p in padroes}
 
-for arquivo in arquivos_csv_pedidos:
-    caminho_completo = os.path.join(pasta_pedidos, arquivo)
+for caminho_completo in arquivos_csv_pedidos:
+    arquivo = os.path.basename(caminho_completo)
     df = pd.read_csv(caminho_completo)
     # Deleta as colunas indesejadas
     colunas_para_deletar = [
