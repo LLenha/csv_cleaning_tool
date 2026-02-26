@@ -12,6 +12,21 @@ padroes = [
     'malzoni', 'b29', 'b32', 'jkfc', 'cetenco', 'rochavera', 'riverview', 'cbre', 'floffice'
 ]
 
+
+def regravar_csv(destino, dataframes):
+    if os.path.exists(destino):
+        os.remove(destino)
+
+    primeiro = True
+    for df in dataframes:
+        df.to_csv(
+            destino,
+            index=False,
+            mode='w' if primeiro else 'a',
+            header=primeiro
+        )
+        primeiro = False
+
 # --- PRODUTOS ---
 
 # Lista arquivos .csv recursivamente (incluindo subpastas)
@@ -34,9 +49,9 @@ for caminho_completo in arquivos_csv_produtos:
 # Salva cada grupo de produtos em um CSV final
 for padrao, lista_dfs in grupos_produtos.items():
     if lista_dfs:
-        df_final = pd.concat(lista_dfs, ignore_index=True)
         nome_saida = f"produtos_{padrao.replace('produtos_', '').replace('_', '')}_geral.csv"
-        df_final.to_csv(os.path.join(pasta_salvar, nome_saida), index=False)
+        caminho_saida = os.path.join(pasta_salvar, nome_saida)
+        regravar_csv(caminho_saida, lista_dfs)
 
 # --- PEDIDOS ---
 
@@ -71,13 +86,13 @@ for caminho_completo in arquivos_csv_pedidos:
 # Salva cada grupo de pedidos em um CSV 
 for padrao, lista_dfs in grupos_pedidos.items():
     if lista_dfs:
-        df_final = pd.concat(lista_dfs, ignore_index=True)
         nome_saida = f"pedidos_{padrao.replace('pedidos_', '').replace('_', '')}_geral.csv"
-        df_final.to_csv(os.path.join(pasta_salvar, nome_saida), index=False)
+    caminho_saida = os.path.join(pasta_salvar, nome_saida)
+    regravar_csv(caminho_saida, lista_dfs)
 
 # Salva um CSV com todos os pedidos e um para todos os produtos na mesma pasta (pasta_salvar) (csvs finais)
-df_produtos_geral = pd.concat([df for lista in grupos_produtos.values() for df in lista], ignore_index=True)
-df_produtos_geral.to_csv(os.path.join(pasta_salvar, "produtos_geral.csv"), index=False)
+lista_produtos_geral = [df for lista in grupos_produtos.values() for df in lista]
+regravar_csv(os.path.join(pasta_salvar, "produtos_geral.csv"), lista_produtos_geral)
 
-df_pedidos_geral = pd.concat([df for lista in grupos_pedidos.values() for df in lista], ignore_index=True)
-df_pedidos_geral.to_csv(os.path.join(pasta_salvar, "pedidos_geral.csv"), index=False)
+lista_pedidos_geral = [df for lista in grupos_pedidos.values() for df in lista]
+regravar_csv(os.path.join(pasta_salvar, "pedidos_geral.csv"), lista_pedidos_geral)
