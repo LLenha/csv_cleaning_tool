@@ -9,7 +9,7 @@ pasta_salvar = "C:/Users/Samsung/Desktop/Jobs/Base - Analise/Base_Python"
 
 # Padrões de agrupamento (nome das lojas)
 padroes = [
-    'malzoni', 'b29', 'b32', 'jkfc', 'cetenco', 'rochavera', 'riverview', 'cbre'
+    'malzoni', 'b29', 'b32', 'jkfc', 'cetenco', 'rochavera', 'riverview', 'cbre', 'floffice'
 ]
 
 # --- PRODUTOS ---
